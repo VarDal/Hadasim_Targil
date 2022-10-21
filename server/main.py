@@ -25,14 +25,10 @@ def get_db():
 def GetCovidPatients(db: Session = Depends(get_db)):
     return crud.getHospitalMembers(db)
 
-# @app.get('/{name}')
-# def GetCovidPatient(name: str, db: Session = Depends(get_db)):
-#     for patient in covidPatients:
-#         if(patient == name):
-#             return patient
-    
-#     return None
-
+@app.get('/{id}')
+def GetCovidPatient(id: int, db: Session = Depends(get_db)):
+   return crud.getHospitalMember(db, id)
+   
 @app.post("/", response_model=schemas.HospitalMember)
 def addCovidPatient(member: schemas.HospitalMemberCreate,  db: Session = Depends(get_db)):
     return crud.createHospitalMember(db, member)
