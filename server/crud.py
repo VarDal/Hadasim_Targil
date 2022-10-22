@@ -4,8 +4,8 @@ import models, schemas
 def getHospitalMembers(db: Session):
     return db.query(models.HospitalMember).all()
 
-def getHospitalMember(db: Session, member_id: int):
-    return db.query(models.HospitalMember).filter(models.HospitalMember.id == member_id).first()
+def getHospitalMember(db: Session, id: int):
+    return db.query(models.HospitalMember).filter(models.HospitalMember.id == id).first()
 
 def createHospitalMember(db: Session, hospitalMember: schemas.HospitalMemberCreate):
     dbHospitalMember = models.HospitalMember(name=hospitalMember.name)
@@ -13,3 +13,10 @@ def createHospitalMember(db: Session, hospitalMember: schemas.HospitalMemberCrea
     db.commit()
     db.refresh(dbHospitalMember)
     return dbHospitalMember
+
+def deleteHospitalMember(id: int, db: Session):
+    deletedMemberIndex = db.query(models.HospitalMember).filter(models.HospitalMember.id == id).delete()
+    db.commit()
+    return deletedMemberIndex
+
+# לשנות שם של משתמש

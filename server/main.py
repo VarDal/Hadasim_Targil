@@ -1,7 +1,4 @@
-from msilib import schema
-from unicodedata import name
 from fastapi import Depends, FastAPI
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import crud
 import models
@@ -33,18 +30,15 @@ def GetCovidPatient(id: int, db: Session = Depends(get_db)):
 def addCovidPatient(member: schemas.HospitalMemberCreate,  db: Session = Depends(get_db)):
     return crud.createHospitalMember(db, member)
 
-# @app.delete('/{name}')
-# def deleteCovidPatient(name: str,  db: Session = Depends(get_db)):
-#     if covidPatients.__contains__(name):
-#         covidPatients.remove(name)
-#         return name
-#     return None
+@app.delete('/{id}')
+def deleteCovidPatient(id: int,  db: Session = Depends(get_db)):
+    if crud.getHospitalMember(db,id) is None:
+        return None
+    return crud.deleteHospitalMember(id,db)
+    
 
-# @app.put('/{name}')
-# def UpdateCovidPatient(name: str, patient: Patient, db: Session = Depends(get_db)):
-#     for covidPatientIndex, covidPatient in enumerate(covidPatients):
-#         if covidPatient == name:
-#             covidPatients[covidPatientIndex] = patient.name
-#             return patient.name
-#     return None
+# לשנות שם של משתמש ולישמור בתוך המסד הנתונים את השינויים
+@app.put('/{id}')
+def UpdateCovidPatient(id: int, db: Session = Depends(get_db)):
+
 
