@@ -21,7 +21,6 @@ def deleteHospitalMember(id: int, db: Session):
     db.commit()
     return deletedMemberIndex
 
-# לשנות שם של משתמש
 def updateNameMember (db:Session, id:int, new_name:str):
     updateNameMember=db.query(models.HospitalMember).filter(models.HospitalMember.id == id).update({'name': new_name})
     db.commit()
