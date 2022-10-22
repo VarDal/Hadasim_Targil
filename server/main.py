@@ -4,11 +4,20 @@ import crud
 import models
 import database
 import schemas
+from fastapi.middleware.cors import CORSMiddleware
 
 
 models.database.Base.metadata.create_all(bind=database.engine)
 
 app=FastAPI()#מכיל את כל נתוני האפליקציה
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins='*',
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = database.SessionLocal()
