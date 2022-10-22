@@ -1,3 +1,5 @@
+from unicodedata import name
+from fastapi import Query
 from sqlalchemy.orm import Session
 import models, schemas
 
@@ -20,3 +22,7 @@ def deleteHospitalMember(id: int, db: Session):
     return deletedMemberIndex
 
 # לשנות שם של משתמש
+def updateNameMember (db:Session, id:int, new_name:str):
+    updateNameMember=db.query(models.HospitalMember).filter(models.HospitalMember.id == id).update({'name': new_name})
+    db.commit()
+    return updateNameMember

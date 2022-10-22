@@ -35,10 +35,11 @@ def deleteCovidPatient(id: int,  db: Session = Depends(get_db)):
     if crud.getHospitalMember(db,id) is None:
         return None
     return crud.deleteHospitalMember(id,db)
-    
 
-# לשנות שם של משתמש ולישמור בתוך המסד הנתונים את השינויים
 @app.put('/{id}')
-def UpdateCovidPatient(id: int, db: Session = Depends(get_db)):
-
+def UpdateNameMember(id:int, member: schemas.HospitalMemberCreate, db: Session = Depends(get_db)):
+    if crud.getHospitalMember(db,id) is None:
+        return None
+    return crud.updateNameMember(db,id,member.name)
+    
 
